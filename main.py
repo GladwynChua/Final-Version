@@ -4,7 +4,7 @@ from tkinter import messagebox
 import sys
 import menu 
 
-# defining Class for the PriceComparisonApp
+# defining Class for the Price Comparison
 class PriceComparison:
     # Function using method - manipulate data and perform actions on objects
     def __init__(self, root):
