@@ -248,6 +248,8 @@ class PriceComparison:
 
 
         self.result_label = tk.Text(result_frame, font=("Arial", 12), fg="#00008B", bg="#ECECEC", wrap=tk.WORD) # Text widget to display the price information for each supermarket. Also wraps text which fits the contents within area. 
+        self.result_label.pack(fill="both", expand=True)
+        
         self.result_label.config(yscrollcommand=scrollbar.set) # Configures the scrollbar and sets it 
         scrollbar.config(command=self.result_label.yview)
 
