@@ -1,30 +1,31 @@
+# Import libraries
 import tkinter as tk
-import tkinter as ttk
+from tkinter import ttk as ttk
 from tkinter import messagebox
 import sys
 import menu 
 
-# defining Class for the Price Comparison
+# Class for the Price Comparison
 class PriceComparison:
     # Function using method - manipulate data and perform actions on objects
-    def __init__(self, root):
+    def __init__(self, root): # Constructor
         # Creating main window
-        self.root = root
+        self.root = root # Which can be used later on to call method from other classes
         self.root.title("Price Comparison: Botany Supermarkets")
         self.root.attributes("-fullscreen", True) # Allows programme to be on fullscreen mode
         self.root.configure(bg="#ECECEC") # Set background colour
         
-        # Calling function of different aspects and minor components in code
-        self.create_banner()
-        self.create_product_dropdown()
-        self.create_compare_button()
-        self.create_results_frame()
-        self.create_quit_button()
+        # Calling the method of different aspects and minor components in code
+        self.create_banner() # Creates the banner to a dark blue colour.
+        self.create_product_dropdown() # Creates a product dropdown for the items
+        self.create_compare_button() #  Creates a button which compares prices
+        self.create_results_frame() # Creates the frame where prices are listed
+        self.create_quit_button() # Creates the quit button to exit programme
 
         # Data structure to store supermarket and details through dictionaries. 
         self.supermarkets = {
             "New World": {
-            # Product name, brand and deals
+            # Product name, brand, price and deals
             "Milk (3L)": {
                 "Value Standard Milk": (5.69, ""),
                 "Value Lite Reduced Fat Milk": (5.69, ""),
@@ -79,7 +80,7 @@ class PriceComparison:
             },
         },
         "Countdown": {
-            # Product name, brand and deals
+            # Product name, brand, price and deals
             "Milk (3L)": {
                 "Meadow Fresh Milk Standard Original": (7.26, ""),
                 "Anchor Milk Lite 98.5 percent Fat Free": (7.59, ""),
@@ -161,7 +162,7 @@ class PriceComparison:
             },
         },
         "Pak'n Save": {
-            # Product name, brand and deals
+            # Product name, brand, prices and deals
             "Milk (3L)": {
                 "Value Standard Milk": (5.57, ""),
                 "Value Lite Reduced Fat Milk": (5.57, ""),
@@ -212,56 +213,55 @@ class PriceComparison:
         },
     }
 
-    # Function to create a bannner
+    # Create a bannner
     def create_banner(self):
-        banner_frame = tk.Frame(self.root, bg="#00008B")
-        banner_frame.pack(fill="x")
+        banner_frame = tk.Frame(self.root, bg="#00008B") # Adding a frame for the banner with the dark blue colour scheme
+        banner_frame.pack(fill="x") # This is to fill whole space horizontally
 
-        banner_label = tk.Label(banner_frame, text="Price Comparison: Botany Supermarkets", font=("Arial", 18, "bold"), fg="white", bg="#00008B")
-        banner_label.pack(pady=10)
+        banner_label = tk.Label(banner_frame, text="Price Comparison: Botany Supermarkets", font=("Arial", 18, "bold"), fg="white", bg="#00008B") # Addinf the text, fonts, font size, font colour and background colour
+        banner_label.pack(pady=10) # Is to create space between widgets on vertical axis
 
-    # Function to create product dropdown
+    # Create product dropdown
     def create_product_dropdown(self):# parentheses- argument/parameters which refers to class (object)
-        self.product_var = tk.StringVar(self.root)
-        self.product_var.set("Milk (3L)")
+        self.product_var = tk.StringVar(self.root) # Holds strings data where can set and retrieve text values
+        self.product_var.set("Milk (3L)") # This will display the product Milk 3L on the dropdown bar
 
-        product_label = tk.Label(self.root, text="Select Product:", font=("Arial", 14), fg="#00008B", bg="#ECECEC")
-        product_label.pack()
+        product_label = tk.Label(self.root, text="Select Product:", font=("Arial", 14), fg="#00008B", bg="#ECECEC") # Creates a text above the dropdown to indicate users to choose from. Changes the colour and fonts.
+        product_label.pack() # Place label  
 
-        product_dropdown = tk.OptionMenu(self.root, self.product_var, "Milk (3L)", "Eggs (Dozen)", "Butter Blocks (500g)", "Bananas", "Broccoli", "Avocado", "Loose Tomatoes", "Potatoes", "White Sandwich", "Ready Salted Chips")
-        product_dropdown.config(font=("Arial", 12), bg="#F5F5F5")
-        product_dropdown.pack()
+        product_dropdown = tk.OptionMenu(self.root, self.product_var, "Milk (3L)", "Eggs (Dozen)", "Butter Blocks (500g)", "Bananas", "Broccoli", "Avocado", "Loose Tomatoes", "Potatoes", "White Sandwich", "Ready Salted Chips") # Widget used for dropdown fro users to select one at a time. 
+        product_dropdown.config(font=("Arial", 12), bg="#F5F5F5") # Configuring the dropdown
+        product_dropdown.pack() # Place dropdown
 
-    # Function to create and compare button
+    # Create and compare button
     def create_compare_button(self):
-        compare_button = tk.Button(self.root, text="Compare Prices", font=("Arial", 12, "bold"), fg="white", bg="#00008B", command=self.compare_prices)
-        compare_button.pack(pady=15)
+        compare_button = tk.Button(self.root, text="Compare Prices", font=("Arial", 12, "bold"), fg="white", bg="#00008B", command=self.compare_prices) # Alters the font and has command set to compare prices
+        compare_button.pack(pady=15) # Is to create space between widgets on vertical axis
 
     # Creates frame for results (the price, brand, supermarket)
     def create_results_frame(self):
-        result_frame = tk.Frame(self.root, bg="#ECECEC")
-        result_frame.pack(fill="both", expand=True)
+        result_frame = tk.Frame(self.root, bg="#ECECEC") # Creates a frane using a widget.
+        result_frame.pack(fill="both", expand=True) # Filling the remainder space left. Using Boolean to indicate that expanding to cover areas. 
 
-        scrollbar = ttk.Scrollbar(result_frame)
-        scrollbar.pack(side="right", fill="y")
+        scrollbar = ttk.Scrollbar(result_frame) # Scrollbar for the result frame
+        scrollbar.pack(side="right", fill="y") # Scorll bar fills up vertically and is positioned at the right side
 
-        self.result_label = tk.Text(result_frame, font=("Arial", 12), fg="#00008B", bg="#ECECEC", wrap=tk.WORD)
-        self.result_label.pack(fill="both", expand=True)
 
-        self.result_label.config(yscrollcommand=scrollbar.set)
+        self.result_label = tk.Text(result_frame, font=("Arial", 12), fg="#00008B", bg="#ECECEC", wrap=tk.WORD) # Text widget to display the price information for each supermarket. Also wraps text which fits the contents within area. 
+        self.result_label.config(yscrollcommand=scrollbar.set) # Configures the scrollbar and sets it 
         scrollbar.config(command=self.result_label.yview)
 
-    # Function to create a quit button
+    # Creates a quit button
     def create_quit_button(self):
         quit_button = tk.Button(self.root, text="Quit", command=self.quit, width=6, height=2, bg="red", fg="white", font=("ariel", 16, "bold"))
         quit_button.place(x=1220, y=200)
 
-    # Function for quit messagebox
+    # Creates quit messagebox
     def quit(self):
         messagebox.showinfo("Price Comparison: Botany Supermarkets", message="Hope to see you again soon!")
         sys.exit()
 
-    # Function to compare prices
+    # Creates to compare prices
     def compare_prices(self):
         selected_product = self.product_var.get()
 
@@ -271,7 +271,7 @@ class PriceComparison:
         cheapest_brands = []
         cheapest_deals = []
 
-        # Function to fetch product details for each supermarket and find the cheapest option
+        # Fettch product details for each supermarket and find the cheapest option
         def get_product_details(selected_product):
             nonlocal cheapest_price, cheapest_supermarkets, cheapest_brands, cheapest_deals #nonlocal used to work with variables inside nested fucntions - these cases include vairables not belonging in inner functions
             product_details = ""
@@ -280,9 +280,9 @@ class PriceComparison:
                 if selected_product in products:
                     selected_items = products[selected_product]
                     product_details += f"--- {supermarket} ---\n"
-                    if isinstance(selected_items, dict):
-                        for brand, item_info in selected_items.items():
-                            if len(item_info) == 2:
+                    if isinstance(selected_items, dict): # isinstance is to check the type of object - generally used for multiple classess and handling objects. Returns true if the specified object is of specific type.
+                        for brand, item_info in selected_items.items(): # For loop
+                            if len(item_info) == 2: # len returns length of object, determines the size of data. 
                                 price = item_info[0]
                                 deal = item_info[1]
                             else:
@@ -290,9 +290,9 @@ class PriceComparison:
                                 deal = ""
                             product_details += f"{brand}: ${price:.2f}"
                             if deal:
-                                product_details += f" ({deal})"
+                                product_details += f" ({deal})" # f strings for to embed python expressions
                             product_details += "\n"
-
+ 
                             # Tracking cheapest price and related details
                             if price < cheapest_price:
                                 cheapest_price = price
@@ -325,17 +325,17 @@ class PriceComparison:
             result_text += ")"
 
         # Updating result_label widget with the result_text
-        self.result_label.config(state="normal")
-        self.result_label.delete("1.0", tk.END)
+        self.result_label.config(state="normal") # setting the text widget to be editable 
+        self.result_label.delete("1.0", tk.END) # delete contents of result_label widget. 1.0 represents the first character of text 
         self.result_label.tag_configure("title", font=("Arial", 16))
         self.result_label.tag_configure("details", font=("Arial", 14))
-        self.result_label.insert(tk.END, result_text, "title")
-        self.result_label.config(state="disabled")
+        self.result_label.insert(tk.END, result_text, "title") # place contents from result_text at end of text in widget
+        self.result_label.config(state="disabled") # making text read-only cannot be modified
 
 # Method - main entry point of application
 if __name__ == "__main__":
     root = tk.Tk()
-    app = PriceComparison(root)
+    app = PriceComparison(root) # Calling class
     root.mainloop()
 
 
