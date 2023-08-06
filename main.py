@@ -278,35 +278,34 @@ class PriceComparison:
             nonlocal cheapest_price, cheapest_supermarkets, cheapest_brands, cheapest_deals #nonlocal used to work with variables inside nested fucntions - these cases include vairables not belonging in inner functions
             product_details = ""
             # Iterate through each supermarket from data structure
-            for supermarket, products in self.supermarkets.items():
-                if selected_product in products:
-                    selected_items = products[selected_product]
-                    product_details += f"--- {supermarket} ---\n"
-                    if isinstance(selected_items, dict): # isinstance is to check the type of object - generally used for multiple classess and handling objects. Returns true if the specified object is of specific type.
-                        for brand, item_info in selected_items.items(): # For loop
-                            if len(item_info) == 2: # len returns length of object, determines the size of data. 
-                                price = item_info[0]
-                                deal = item_info[1]
-                            else:
-                                price = item_info
-                                deal = ""
-                            product_details += f"{brand}: ${price:.2f}"
-                            if deal:
-                                product_details += f" ({deal})" # f strings for to embed python expressions
-                            product_details += "\n"
- 
-                            # Tracking cheapest price and related details
-                            if price < cheapest_price:
-                                cheapest_price = price
-                                cheapest_supermarkets = [supermarket]
-                                cheapest_brands = [brand]
-                                cheapest_deals = [deal]
-                            elif price == cheapest_price:
-                                cheapest_supermarkets.append(supermarket)
-                                cheapest_brands.append(brand)
-                                cheapest_deals.append(deal)
+            for supermarket, products in self.supermarkets.items():      
+                selected_items = products[selected_product]
+                product_details += f"--- {supermarket} ---\n"
+                if isinstance(selected_items, dict): # isinstance is to check the type of object - generally used for multiple classess and handling objects. Returns true if the specified object is of specific type.
+                    for brand, item_info in selected_items.items(): # For loop
+                        if len(item_info) == 2: # len returns length of object, determines the size of data. 
+                            price = item_info[0]
+                            deal = item_info[1]
+                        else:
+                            price = item_info
+                            deal = ""
+                        product_details += f"{brand}: ${price:.2f}"
+                        if deal:
+                            product_details += f" ({deal})" # f strings for to embed python expressions
+                        product_details += "\n"
 
-                    product_details += "\n"
+                        # Tracking cheapest price and related details
+                        if price < cheapest_price:
+                            cheapest_price = price
+                            cheapest_supermarkets = [supermarket]
+                            cheapest_brands = [brand]
+                            cheapest_deals = [deal]
+                        elif price == cheapest_price:
+                            cheapest_supermarkets.append(supermarket)
+                            cheapest_brands.append(brand)
+                            cheapest_deals.append(deal)
+
+                product_details += "\n"
 
             return product_details
 
